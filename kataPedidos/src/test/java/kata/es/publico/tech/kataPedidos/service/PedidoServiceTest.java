@@ -32,7 +32,7 @@ public class PedidoServiceTest {
     }
 
     /**
-     * Test para verificar que se obtienen un millón de pedidos de la API correctamente.
+     * Test para verificar que se obtienen pedidos de la API correctamente.
      */
     @Test
     public void testGetAllPedidos_successful() throws Exception {
@@ -49,8 +49,8 @@ public class PedidoServiceTest {
         when(apiResponse.getContent()).thenReturn(pedidosSimulados);
 
 
-        // Llamamos al método real
-        List<Pedido> resultado = pedidoService.getAllPedidos();
+        // Llamamos al método real desde la pagina 9999 para que nos devuelva 200 pedidos
+        List<Pedido> resultado = pedidoService.getAllPedidos(9999,null);
 
         // Verificamos que el resultado no sea nulo y contenga un millón de pedidos
         assertNotNull(resultado);

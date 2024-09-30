@@ -27,27 +27,32 @@ public class PedidoService implements IPedidoService{
 
     // URL base de la API para obtener los pedidos
     private final static String BASE_URL_PEDIDOS = "https://kata-espublicotech.g3stiona.com/v1/orders";
-    private final static int MAX_PER_PAGE = 100;  // Tamaño máximo de pedidos por página
 
     /**
      * Obtiene todos los pedidos disponibles en la API, recorriendo todas las páginas.
      *
+     * @param pagina Número de la página a obtener. Si es {@code null}, comenzará desde la página 1.
+     * @param maxPorPagina Máximo número de pedidos por página. Este valor debe ser positivo.
      * @return Una lista de objetos {@link Pedido} obtenidos desde el servicio web.
-     * @throws Exception Si ocurre un error durante la solicitud o el procesamiento de la respuesta.
+     * @throws PedidoException Si ocurre un error durante la solicitud o el procesamiento de la respuesta.
      */
-    public List<Pedido> getAllPedidos() throws Exception {
+    public List<Pedido> getAllPedidos(Integer pagina, Integer maxPorPagina) throws Exception {
         // Lista que almacenará todos los pedidos
         List<Pedido> allPedidos = new ArrayList<>();
-
-        // Inicializamos la página en 1
-        int currentPage = 9999;
+        
+        // Inicializamos la página en 1 si 'pagina' es nula, de lo contrario usamos el valor proporcionado
+        int currentPage = (pagina != null) ? pagina : 1;
+        
+        // Inicializamos el numero maxi de paginas en 100 si 'maxPorPagina' es nulo, de lo contrario usamos el valor proporcionado
+        int currentMax= (maxPorPagina != null) ? maxPorPagina : 100;
+        
         boolean morePages = true;
         
 		try {
 			
 	        while (morePages) {
 	            // Construimos la URL para la página actual con los parámetros dinámicos
-	            String paginatedUrl = BASE_URL_PEDIDOS + "?page=" + currentPage + "&max-per-page=" + MAX_PER_PAGE;
+	            String paginatedUrl = BASE_URL_PEDIDOS + "?page=" + currentPage + "&max-per-page=" + currentMax;
 
 	            // Realizamos la solicitud HTTP para obtener la página actual
 	            ApiResponse apiResponse = fetchPedidosFromUrl(paginatedUrl);

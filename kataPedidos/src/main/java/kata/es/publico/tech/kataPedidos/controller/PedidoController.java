@@ -3,6 +3,7 @@ package kata.es.publico.tech.kataPedidos.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kata.es.publico.tech.kataPedidos.domain.Pedido;
@@ -32,13 +33,16 @@ public class PedidoController {
     /**
      * Endpoint para obtener todos los pedidos y realizar las acciones necesarias.
      * 
+     * @param pagina      Número de la página a obtener. Si es {@code null}, comenzará desde la página 1.
+     * @param maxPorPagina Máximo número de pedidos a recuperar por página. Este valor debe ser positivo.
      * @return Un mensaje con el número total de pedidos procesados.
      */
     @GetMapping("/all")
-    public String getAllPedidos() {
+    public String getAllPedidos(@RequestParam(required = false) Integer pagina,
+                                 @RequestParam(required = false) Integer maxPorPagina) {
         try {
             // Obtener todos los pedidos desde el servicio
-            List<Pedido> pedidos = iPedidoService.getAllPedidos();
+            List<Pedido> pedidos = iPedidoService.getAllPedidos(pagina, maxPorPagina);
 
             // Guardar los pedidos en la base de datos (descomentar si es necesario)
      //       iSaveService.savePedidos(pedidos);
