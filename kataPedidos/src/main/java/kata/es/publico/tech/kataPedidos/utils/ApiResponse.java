@@ -10,6 +10,20 @@ public class ApiResponse {
     private int page;
     private List<Pedido> content;
     private Links links; // Agregar el campo links para mapear los enlaces.
+    
+    /**
+     * Constructor que inicializa todos los campos de la respuesta.
+     *
+     * @param page El número de página de la respuesta.
+     * @param content Una lista de objetos {@link Pedido} que representan los pedidos.
+     * @param links Un objeto {@link Links} que contiene los enlaces de la respuesta.
+     */
+    public ApiResponse(int page, List<Pedido> content, Links links) {
+        this.page = page;
+        this.content = content;
+        this.links = links;
+    }
+
 
     /**
      * Obtiene el número de página de la respuesta.
