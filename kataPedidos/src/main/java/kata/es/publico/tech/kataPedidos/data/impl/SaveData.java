@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import kata.es.publico.tech.kataPedidos.data.ISaveData;
 import kata.es.publico.tech.kataPedidos.domain.Pedido;
+import kata.es.publico.tech.kataPedidos.exception.PedidoException;
+import kata.es.publico.tech.kataPedidos.exception.SaveServiceException;
 
 /**
  * Clase que implementa la interfaz {@link ISaveData}.
@@ -57,7 +59,7 @@ public class SaveData implements ISaveData {
             pst.executeBatch();
 
         } catch (Exception e) {
-            e.printStackTrace();
+        	  throw new SaveServiceException("Se ha producido un error al guardar los pedidos en BBDD.", e);
         }
     }
 }

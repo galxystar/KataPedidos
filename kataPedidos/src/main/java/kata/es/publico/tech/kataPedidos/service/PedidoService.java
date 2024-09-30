@@ -15,6 +15,7 @@ import com.google.gson.reflect.TypeToken;
 
 import kata.es.publico.tech.kataPedidos.application.IPedidoService;
 import kata.es.publico.tech.kataPedidos.domain.Pedido;
+import kata.es.publico.tech.kataPedidos.exception.PedidoException;
 import kata.es.publico.tech.kataPedidos.utils.ApiResponse;
 
 /**
@@ -41,30 +42,36 @@ public class PedidoService implements IPedidoService{
         // Inicializamos la página en 1
         int currentPage = 10000;
         boolean morePages = true;
+        
+		try {
+			
+	        while (morePages) {
+	            // Construimos la URL para la página actual con los parámetros dinámicos
+	            String paginatedUrl = BASE_URL_PEDIDOS + "?page=" + currentPage + "&max-per-page=" + MAX_PER_PAGE;
 
-        // Mientras haya más páginas con pedidos, seguiremos solicitando
-        while (morePages) {
-            // Construimos la URL para la página actual con los parámetros dinámicos
-            String paginatedUrl = BASE_URL_PEDIDOS + "?page=" + currentPage + "&max-per-page=" + MAX_PER_PAGE;
+	            // Realizamos la solicitud HTTP para obtener la página actual
+	            ApiResponse apiResponse = fetchPedidosFromUrl(paginatedUrl);
 
-            // Realizamos la solicitud HTTP para obtener la página actual
-            ApiResponse apiResponse = fetchPedidosFromUrl(paginatedUrl);
+	            if (apiResponse == null || apiResponse.getContent().isEmpty()) {
+	                // Si no hay más pedidos en la página actual, detenemos el ciclo
+	                morePages = false;
+	            } else {
+	                // Añadimos los pedidos de la página actual a la lista completa
+	                allPedidos.addAll(apiResponse.getContent());
 
-            if (apiResponse == null || apiResponse.getContent().isEmpty()) {
-                // Si no hay más pedidos en la página actual, detenemos el ciclo
-                morePages = false;
-            } else {
-                // Añadimos los pedidos de la página actual a la lista completa
-                allPedidos.addAll(apiResponse.getContent());
-
-                // Verificamos si hay un enlace "next" para continuar paginando
-                morePages = apiResponse.getLinks().getNext() != null;
-            }
-            // Avanzamos a la siguiente página
-            currentPage++;
+	                // Verificamos si hay un enlace "next" para continuar paginando
+	                morePages = apiResponse.getLinks().getNext() != null;
+	            }
+	            // Avanzamos a la siguiente página
+	            currentPage++;
+	        }
+	        return allPedidos; // Retornamos todos los pedidos obtenidos
+	        
+	    } catch (Exception e) {
+            throw new PedidoException("Se ha producido un error al obtener los pedidos.", e);
         }
+        // Mientras haya más páginas con pedidos, seguiremos solicitando
 
-        return allPedidos; // Retornamos todos los pedidos obtenidos
     }
 
     /**

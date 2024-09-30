@@ -2,16 +2,14 @@ package kata.es.publico.tech.kataPedidos.service;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import kata.es.publico.tech.kataPedidos.application.ICsvExportService;
 import kata.es.publico.tech.kataPedidos.domain.Pedido;
+import kata.es.publico.tech.kataPedidos.exception.CsvExportException;
 /**
  * Clase que implementa la interfaz {@link ICsvExportService} para exportar una lista de pedidos
  * a un archivo CSV.
@@ -85,10 +83,10 @@ public class CsvExportService implements ICsvExportService{
             System.out.println("Archivo CSV generado en: " + new File(nombreArchivoCSV).getAbsolutePath());
 
 
-        } catch (Exception e) {
-            // Manejar excepciones, como errores de escritura en el archivo
-            e.printStackTrace();
+        } catch (IOException e) {
+            throw new CsvExportException("Error al exportar pedidos a CSV.", e);
         }
+
     }
 
 }

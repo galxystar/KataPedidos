@@ -1,15 +1,15 @@
 package kata.es.publico.tech.kataPedidos.exception;
 
 /**
- * Excepción personalizada para indicar que no se ha encontrado un pedido.
+ * Excepción personalizada para Pedido Serviceindicar que no se ha encontrado un pedido.
  */
-public class PedidoNotFoundException extends RuntimeException {
+public class PedidoException extends RuntimeException {
     
-    public PedidoNotFoundException(String message) {
+    public PedidoException(String message) {
         super(message);
     }
     
-    public PedidoNotFoundException(String message, Throwable cause) {
+    public PedidoException(String message, Throwable cause) {
         super(message, cause);
     }
 }

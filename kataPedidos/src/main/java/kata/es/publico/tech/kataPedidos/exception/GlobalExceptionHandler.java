@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(PedidoNotFoundException.class)
-    public ResponseEntity<String> handlePedidoNotFound(PedidoNotFoundException ex) {
+    @ExceptionHandler(PedidoException.class)
+    public ResponseEntity<String> handlePedidoNotFound(PedidoException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
