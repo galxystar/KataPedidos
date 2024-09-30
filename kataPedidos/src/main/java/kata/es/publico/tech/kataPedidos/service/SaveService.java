@@ -1,8 +1,5 @@
 package kata.es.publico.tech.kataPedidos.service;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
