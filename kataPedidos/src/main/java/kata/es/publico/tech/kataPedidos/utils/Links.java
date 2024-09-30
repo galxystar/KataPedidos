@@ -8,7 +8,13 @@ public class Links {
     private String prev;
     private String self;
 
-    // Getters y Setters
+    public Links(String next, String prev,String self) {
+		this.next = next;
+		this.prev = prev;
+		this.self = self;
+	}
+
+	// Getters y Setters
     public String getNext() {
         return next;
     }

@@ -10,9 +10,10 @@ import kata.es.publico.tech.kataPedidos.domain.Pedido;
 public interface IResumenService {
 
     /**
-     * Genera y muestra un resumen de la lista de pedidos proporcionada.
+     * Genera, muestra por pantalla y devuelve un resumen de la lista de pedidos proporcionada.
      *
-     * @param listaPedidos La lista de objetos {@link Pedido} de la cual se generará el resumen.
+     * @param listaPedidos La lista de objetos {@link Pedido} de la cual se generará el resumen y se imprimira por pantalla.
+     * @return String con el resumen de la lista de pedidos
      */
-    public void mostrarResumen(List<Pedido> listaPedidos);
+    public String mostrarResumen(List<Pedido> listaPedidos);
 }

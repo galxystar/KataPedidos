@@ -40,7 +40,7 @@ public class PedidoService implements IPedidoService{
         List<Pedido> allPedidos = new ArrayList<>();
 
         // Inicializamos la página en 1
-        int currentPage = 10000;
+        int currentPage = 9999;
         boolean morePages = true;
         
 		try {
@@ -81,7 +81,7 @@ public class PedidoService implements IPedidoService{
      * @return Un objeto {@link ApiResponse} con la respuesta de la API.
      * @throws Exception Si ocurre un error durante la solicitud o el procesamiento de la respuesta.
      */
-    private static ApiResponse fetchPedidosFromUrl(String urlString) throws Exception {
+    protected ApiResponse fetchPedidosFromUrl(String urlString) throws Exception {
         // Configuración de la conexión HTTP
         URL url = new URL(urlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();

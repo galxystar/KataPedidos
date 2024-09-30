@@ -11,12 +11,11 @@ import kata.es.publico.tech.kataPedidos.domain.Pedido;
 import kata.es.publico.tech.kataPedidos.exception.ResumenServiceException;
 @Service
 public class ResumenService implements IResumenService{
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/mi_base_de_datos"; 
-    private static final String DB_USER = "admin";
-    private static final String DB_PASSWORD = "admin";
 
 	@Override
-	public void mostrarResumen(List<Pedido> listaPedidos) {
+	public String mostrarResumen(List<Pedido> listaPedidos) {
+        StringBuilder resumenBuilder = new StringBuilder(); // Crear un StringBuilder para construir el resumen
+
 		try {
 			  // Definir los campos para agrupar el resumen
 		    String[] campos = { "region", "country", "item_type", "sales_channel", "priority" };
@@ -38,18 +37,24 @@ public class ResumenService implements IResumenService{
 		        incrementarConteo(resumen.get("priority"), pedido.getPriority());
 		    }
 
-		    // Mostrar el resumen por cada campo
-		    for (String campo : campos) {
-		        System.out.println("Resumen por " + campo + ":");
-		        Map<String, Integer> conteoCampo = resumen.get(campo);
-		        for (Map.Entry<String, Integer> entry : conteoCampo.entrySet()) {
-		            System.out.println(entry.getKey() + ": " + entry.getValue());
-		        }
-		    }
+	         // Mostrar el resumen por cada campo
+            for (String campo : campos) {
+                resumenBuilder.append("Resumen por ").append(campo).append(":\n");
+                Map<String, Integer> conteoCampo = resumen.get(campo);
+                for (Map.Entry<String, Integer> entry : conteoCampo.entrySet()) {
+                    resumenBuilder.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+                }
+            }
+            
+            // Imprimir el resumen por pantalla
+            System.out.println(resumenBuilder.toString());
+            
 		} catch (Exception e) {
 			
 			throw new ResumenServiceException("Se ha producido un error al generar el resumen de los pedidos.", e);
 		}
+
+        return resumenBuilder.toString(); // Devolver el resumen como String
 	  
 	}
 
