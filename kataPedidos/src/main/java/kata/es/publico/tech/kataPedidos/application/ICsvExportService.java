@@ -14,6 +14,7 @@ public interface ICsvExportService {
      *
      * @param nombreArchivoCSV El nombre del archivo CSV donde se exportarán los pedidos.
      * @param listaPedidos      La lista de objetos {@link Pedido} que serán exportados al archivo CSV.
+     * @return ruta donde se ha generado el arichivo CSV.
      */
-    public void exportarPedidosCSV(String nombreArchivoCSV, List<Pedido> listaPedidos);
+    public String exportarPedidosCSV(String nombreArchivoCSV, List<Pedido> listaPedidos);
 }

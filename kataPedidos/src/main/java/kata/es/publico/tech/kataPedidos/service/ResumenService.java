@@ -39,7 +39,7 @@ public class ResumenService implements IResumenService{
 
 	         // Mostrar el resumen por cada campo
             for (String campo : campos) {
-                resumenBuilder.append("Resumen por ").append(campo).append(":\n");
+                resumenBuilder.append("\n- Resumen por ").append(campo).append(":\n");
                 Map<String, Integer> conteoCampo = resumen.get(campo);
                 for (Map.Entry<String, Integer> entry : conteoCampo.entrySet()) {
                     resumenBuilder.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");

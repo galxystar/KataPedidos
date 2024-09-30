@@ -35,7 +35,7 @@ public class PedidoController {
      * 
      * @param pagina      Número de la página a obtener. Si es {@code null}, comenzará desde la página 1.
      * @param maxPorPagina Máximo número de pedidos a recuperar por página. Este valor debe ser positivo.
-     * @return Un mensaje con el número total de pedidos procesados.
+     * @return Un mensaje con el número total de pedidos procesados, el resumen de los pedidos y la ruta del archivo csv generado.
      */
     @GetMapping("/all")
     public String getAllPedidos(@RequestParam(required = false) Integer pagina,
@@ -48,13 +48,14 @@ public class PedidoController {
      //       iSaveService.savePedidos(pedidos);
 
             // Mostrar el resumen de pedidos (descomentar si es necesario)
-            iResumenService.mostrarResumen(pedidos);
+            String resumen = iResumenService.mostrarResumen(pedidos);
 
             // Exportar pedidos a un archivo CSV (descomentar si es necesario)
-            iCsvExportService.exportarPedidosCSV("FicheroPedidos.csv", pedidos);
+            String rutaCsvGenerado =  iCsvExportService.exportarPedidosCSV("FicheroPedidos.csv", pedidos);
 
             // Devolver un mensaje con el número total de pedidos procesados
-            return "Pedidos obtenidos y procesados: " + pedidos.size();
+            return "Pedidos obtenidos y procesados: " + pedidos.size() +
+            		"\n"+resumen+"\n\n"+"Ruta fichero CSV generado: \n"+rutaCsvGenerado ;
             
         } catch (Exception e) {
             e.printStackTrace();
