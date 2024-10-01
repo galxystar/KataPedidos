@@ -45,7 +45,7 @@ public class PedidoController {
             List<Pedido> pedidos = iPedidoService.getAllPedidos(pagina, maxPorPagina);
 
             // Guardar los pedidos en la base de datos (descomentar si es necesario)
-     //       iSaveService.savePedidos(pedidos);
+            iSaveService.savePedidos(pedidos);
 
             // Mostrar el resumen de pedidos (descomentar si es necesario)
             String resumen = iResumenService.mostrarResumen(pedidos);
