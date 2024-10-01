@@ -50,9 +50,10 @@ public class CsvExportService implements ICsvExportService{
      * 
      * @param nombreArchivoCSV El nombre del archivo CSV donde se exportarán los pedidos.
      * @param listaPedidos La lista de objetos Pedido que se exportarán al archivo CSV.
+     * @return ruta donde se ha generacio el archivo CSV.
      */
     @Override
-    public void exportarPedidosCSV(String nombreArchivoCSV, List<Pedido> listaPedidos) {
+    public String exportarPedidosCSV(String nombreArchivoCSV, List<Pedido> listaPedidos) {
         try (FileWriter exportCSV = new FileWriter(nombreArchivoCSV)) {
 
             // Escribir la cabecera del CSV
@@ -80,8 +81,9 @@ public class CsvExportService implements ICsvExportService{
             }
             
             // Confirmación de la ruta del archivo generado
-            System.out.println("Archivo CSV generado en: " + new File(nombreArchivoCSV).getAbsolutePath());
-
+            String filePath = new File(nombreArchivoCSV).getAbsolutePath();
+            System.out.println("Archivo CSV generado en: " + filePath);
+    		return filePath;
 
         } catch (IOException e) {
             throw new CsvExportException("Error al exportar pedidos a CSV.", e);
