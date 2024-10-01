@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/KATA
+    username: root         # Reemplaza con tu nombre de usuario de MySQL
+    password: root         # Reemplaza con tu contraseña de MySQL
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update           # Cambia a 'create' si deseas crear la base de datos desde cero
+    show-sql: true               # Muestra las consultas SQL en la consola
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+
+server:
+  port: 8080                     # Puerto en el que se ejecutará la aplicación
